@@ -9,7 +9,7 @@
 
 Hola Prime is a prop trading firm competing in a crowded, high-intent vertical (forex/futures funded accounts). The brand has strong differentiators — 1-hour payouts, ISO certifications, NBA ambassador Karl-Anthony Towns, and a solid Trustpilot presence — but is leaving enormous organic and AI search visibility on the table.
 
-Key problems: heavy JavaScript rendering makes critical content invisible to crawlers and AI bots; no structured data exists across the site; the blog is underdeveloped relative to what the competitive landscape demands; and the brand is largely absent from AI-generated "best prop firm" recommendations in ChatGPT, Perplexity, and Gemini.
+Key problems: heavy JavaScript rendering makes critical content invisible to crawlers and AI bots; structured data is partially implemented but incomplete across most page types; the blog is underdeveloped relative to what the competitive landscape demands; and the brand is largely absent from AI-generated "best prop firm" recommendations in ChatGPT, Perplexity, and Gemini.
 
 This document maps every gap and provides a ranked action plan.
 
@@ -26,38 +26,41 @@ This document maps every gap and provides a ranked action plan.
 
 ---
 
-### 1.2 Structured Data — Partial Implementation, Critical Gaps Remain
+### 1.2 Structured Data — Foundation in Place, Key Types Missing
 
-**What's already in place (verified via live source):**
-- `WebSite` schema on homepage (with publisher reference)
-- `Corporation` schema on homepage (with `sameAs` links to Twitter, Instagram, YouTube, LinkedIn)
-- Full Open Graph metadata on homepage (`og:title`, `og:description`, `og:url`, `og:image`, `og:type`)
-- Twitter Card metadata on homepage (`summary_large_image`)
+**What's already implemented:**
 
-**What's still missing — critical gaps:**
+| Schema Type | Pages | Status |
+|---|---|---|
+| `WebSite` | Homepage | ✅ Present |
+| `Corporation` | Homepage | ✅ Present (with sameAs social links) |
+| `FAQPage` | /forex/faq/, /futures/faq/, main FAQ | ✅ Present |
+| `BreadcrumbList` | Subpages | ✅ Present |
+| Open Graph metadata | Homepage | ✅ Present (title, description, image, type) |
+| Twitter Card | Homepage | ✅ Present (summary_large_image) |
+
+**What's still missing — key gaps:**
 
 | Schema Type | Pages Needed | Benefit | Status |
 |---|---|---|---|
-| `FAQPage` | Homepage, /forex/, /futures/, blog posts | FAQ rich result in SERPs, AI citations | ❌ Missing |
-| `Article` | All blog posts | Article rich result, News eligibility, AI citation | ❌ Missing |
+| `Article` | All blog posts | Article rich result, AI citation eligibility | ❌ Missing |
 | `HowTo` | Challenge guides, payout page | Featured snippet with numbered steps | ❌ Missing |
-| `BreadcrumbList` | All subpages | SERP breadcrumb display | ❌ Missing |
-| `Product` / `Offer` | Challenge plan pages | Price/product snippets | ❌ Missing |
-| `AggregateRating` | Testimonial/review pages | Star ratings in SERPs | ❌ Missing |
-| `Person` | Blog authors, ambassador page | E-E-A-T, Knowledge Graph | ❌ Missing |
+| `Product` / `Offer` | Challenge plan pages (/forex/prime-challenge/, etc.) | Price/product snippets | ❌ Missing |
+| `AggregateRating` | Testimonial pages | Star ratings in SERPs | ❌ Missing |
+| `Person` | Blog authors (/author-sam-saleh/), ambassador | E-E-A-T, Knowledge Graph | ❌ Missing |
 | `SiteLinksSearchBox` | Homepage | In-SERP site search | ❌ Missing |
-| OG tags | Blog posts, /forex/, /futures/ | Social shareability, AI citation | ❌ Subpages unverified |
+| OG tags | Blog posts, interior subpages | Social shareability, AI citation | ⚠️ Unconfirmed on subpages |
 
 **Gaps in existing `Corporation` schema:**
-The current `Corporation` JSON-LD is minimal. It's missing: `foundingDate`, `description`, `address`, `telephone`, `numberOfEmployees`, `award`, and `areaServed`. These fields strengthen Knowledge Graph inclusion and AI brand summaries.
+The current `Corporation` JSON-LD is minimal. Missing fields: `foundingDate`, `description`, `address`, `telephone`, `award`, and `areaServed`. These strengthen Knowledge Graph inclusion and AI brand summaries significantly.
 
-- **Severity:** 🟡 MEDIUM (foundation exists; gaps are in breadth and subpage coverage)
+- **Severity:** 🟡 MEDIUM (solid foundation exists; gaps are in content page types)
 - **Fix:** 
-  1. Expand `Corporation` schema on homepage with missing fields (founding date, address, awards, certifications)
-  2. Add `FAQPage` JSON-LD to all pages with FAQ sections — highest ROI remaining action
-  3. Add `Article` + `Person` (author) schema to all blog posts
-  4. Add `BreadcrumbList` to all subpages
-  5. Add OG/Twitter Card meta tags to all subpages (blog, /forex/, /futures/)
+  1. Add `Article` + `Person` (named author) schema to all blog posts — highest ROI remaining action
+  2. Add `HowTo` schema to challenge walkthrough content and payout guides
+  3. Add `Product`/`Offer` schema to all challenge plan pages (pricing info)
+  4. Expand `Corporation` schema with founding date, address, awards, ISO certifications
+  5. Verify OG tags are implemented on all subpages, not just homepage
 
 ---
 
@@ -391,18 +394,21 @@ Google's Knowledge Panel for a brand requires:
 
 ### Top 10 Quick Wins (Ranked by Impact vs. Effort)
 
-| # | Action | Impact | Effort | Timeline |
-|---|---|---|---|---|
-| 1 | **Add `FAQPage` schema to all pages with FAQ sections** | 🔴 Very High | 🟢 Low | Week 1 |
-| 2 | **Remove lp* pages from sitemap; add noindex to all LP pages** | 🔴 Very High | 🟢 Low | Week 1 |
-| 3 | **Add `Organization` schema to homepage with sameAs links** | 🔴 Very High | 🟢 Low | Week 1 |
-| 4 | **Fix JS-rendered stats — hardcode values server-side** | 🔴 Very High | 🟡 Medium | Week 1–2 |
-| 5 | **Add `Article` schema + author markup to all blog posts** | 🟡 High | 🟢 Low | Week 1–2 |
-| 6 | **Create dedicated "Hola Prime vs FTMO / FundedNext / Topstep" comparison page** | 🔴 Very High | 🟡 Medium | Week 2–3 |
-| 7 | **Rewrite core page headings to be question-based and keyword-rich** | 🟡 High | 🟢 Low | Week 2 |
-| 8 | **Add 600+ words of static crawlable content to About Us, Homepage, and product pages** | 🔴 Very High | 🟡 Medium | Week 2–3 |
-| 9 | **Create a dedicated Payout page** with HowTo schema (step-by-step payout process) | 🟡 High | 🟢 Low | Week 2 |
-| 10 | **Launch blog content targeting 10 PAA questions** (one article per question, FAQ at end of each) | 🔴 Very High | 🟡 Medium | Week 3–4 |
+| # | Action | Impact | Effort | Timeline | Status |
+|---|---|---|---|---|---|
+| 1 | **Fix JS-rendered stats — hardcode values server-side** | 🔴 Very High | 🟡 Medium | Week 1 | ❌ Open |
+| 2 | **Remove lp* pages from sitemap; add noindex to all LP pages** | 🔴 Very High | 🟢 Low | Week 1 | ❌ Open |
+| 3 | **Add `Article` schema + named author markup to all blog posts** | 🔴 Very High | 🟢 Low | Week 1 | ❌ Open |
+| 4 | **Add `Product`/`Offer` schema to all challenge plan pages** | 🟡 High | 🟢 Low | Week 1–2 | ❌ Open |
+| 5 | **Expand `Corporation` schema** — add founding date, address, awards, ISO certs | 🟡 High | 🟢 Low | Week 1 | ❌ Open |
+| 6 | **Create dedicated "Hola Prime vs FTMO / FundedNext / Topstep" comparison page** | 🔴 Very High | 🟡 Medium | Week 2–3 | ❌ Open |
+| 7 | **Rewrite core page headings to be question-based and keyword-rich** | 🟡 High | 🟢 Low | Week 2 | ❌ Open |
+| 8 | **Add 600+ words of crawlable static content to About Us and product pages** | 🔴 Very High | 🟡 Medium | Week 2–3 | ❌ Open |
+| 9 | **Add `HowTo` schema to payout page and challenge guides** | 🟡 High | 🟢 Low | Week 2 | ❌ Open |
+| 10 | **Launch blog content targeting 10 PAA questions** (one article per question, FAQ at end) | 🔴 Very High | 🟡 Medium | Week 3–4 | ❌ Open |
+| — | ~~Add FAQPage schema~~ | — | — | — | ✅ Done |
+| — | ~~Add Organization schema with sameAs~~ | — | — | — | ✅ Done |
+| — | ~~Add BreadcrumbList to subpages~~ | — | — | — | ✅ Done |
 
 ---
 
@@ -414,16 +420,17 @@ Google's Knowledge Panel for a brand requires:
 - [ ] Remove all `lp*` URLs from sitemap.xml
 - [ ] Add `noindex` meta tag to all `/lp*` and `/old-lp*` pages
 - [ ] Add 301 redirects from all `/old-lp*` URLs to current equivalents
-- [ ] Implement `Organization` JSON-LD on homepage
-- [ ] Implement `FAQPage` JSON-LD on homepage, /forex/, /futures/
-- [ ] Render FAQ sections in static HTML (not just JS accordion)
+- [x] ~~Implement `Organization`/`Corporation` JSON-LD on homepage~~ ✅ Done
+- [x] ~~Implement `FAQPage` JSON-LD on FAQ pages~~ ✅ Done
+- [x] ~~Add `BreadcrumbList` schema to subpages~~ ✅ Done
 - [ ] Verify canonical tags across all key pages
+- [ ] Expand `Corporation` schema with foundingDate, address, awards, ISO certs
 
 **Week 2 — Content Structure + Schema Expansion**
 - [ ] Fix all JS-rendered stat counters (server-side render actual values)
 - [ ] Add `Article` + `Person` (author) schema to all blog posts
-- [ ] Add `BreadcrumbList` schema to all subpages
-- [ ] Add `HowTo` schema to challenge walkthrough content
+- [ ] Add `Product`/`Offer` schema to all challenge plan pages
+- [ ] Add `HowTo` schema to challenge walkthrough content and payout page
 - [ ] Restructure H1/H2/H3 hierarchy on Forex, Futures, About pages
 - [ ] Add "Quick Answer" boxes at top of FAQ-heavy pages
 
